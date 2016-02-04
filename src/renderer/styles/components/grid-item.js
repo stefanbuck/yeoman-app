@@ -36,8 +36,7 @@ export default {
   bg: {
     position: 'absolute',
     width: width,
-    height: imgHeight,
-    backgroundImage: 'url(img/grid-item-bg.png)'
+    height: imgHeight
   },
   bgActive: {
     width: '100%',
@@ -64,4 +63,3 @@ export default {
     opacity: 0
   }
 };
-

@@ -1,10 +1,12 @@
 var fs = require('fs');
+var path = require('path');
 var _ = require('lodash');
 var findup = require('findup-sync');
 var semver = require('semver');
 var environment = require('./environment');
 
 var env = null;
+const staticPath = path.join(__dirname, '..', '..', '..', 'static');
 
 function sendCommandToAppWindow(name, data) {
   if (data instanceof Error) {
@@ -15,6 +17,21 @@ function sendCommandToAppWindow(name, data) {
     event: name,
     data: data
   });
+}
+
+function getIcon(pkg, pkgPath) {
+  if (pkg['yeoman-app-icon']) {
+    return 'file://' + path.join(path.dirname(pkgPath), pkg['yeoman-app-icon']);
+  } else {
+    const iconPath = path.join(staticPath, 'img', `${pkg.name}.png`);
+
+    try {
+      fs.accessSync(iconPath);
+      return iconPath;
+    } catch (err) {
+      return path.join(staticPath, 'img', 'grid-item-bg.png');
+    }
+  }
 }
 
 function getGenerators() {
@@ -34,6 +51,8 @@ function getGenerators() {
     var pkg = JSON.parse(fs.readFileSync(pkgPath));
     var generatorVersion = pkg.dependencies['yeoman-generator'];
     var generatorMeta = _.pick(pkg, 'name', 'version', 'description');
+
+    generatorMeta.icon = getIcon(pkg, pkgPath);
 
     // Flag generator to indecate if the generator version is fully supported or not.
     // https://github.com/yeoman/yeoman-app/issues/16#issuecomment-121054821

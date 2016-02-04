@@ -16,6 +16,7 @@ export default React.createClass({
   propTypes: {
     name: PropTypes.string,
     version: PropTypes.string,
+    icon: PropTypes.string,
     active: PropTypes.bool,
     isCompatible: PropTypes.bool,
     gridItemSelected: PropTypes.func
@@ -77,9 +78,10 @@ export default React.createClass({
       )
     );
     const gridItemImgStyle = getStyle(
-      Object.assign({}, styles.img,
-        { backgroundImage: `url(img/${this.props.name}.png)` }
-      ),
+      Object.assign({}, styles.img, {
+        backgroundImage: `url(${this.props.icon})`,
+        backgroundSize: 'cover'
+      }),
       styles.imgActive
     );
     const gridItemBgStyle = getStyle(

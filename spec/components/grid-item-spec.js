@@ -1,6 +1,5 @@
 import createComponent from '../helpers/createComponent.js';
 import GridItem from '../../src/renderer/components/grid-item.jsx';
-import generatorsList from '../fixtures/generators-list.js';
 
 function mockContent() {
   const contentDiv = window.document.createElement('div');
@@ -22,7 +21,11 @@ describe('Grid Item', () => {
     mockContent();
     renderOutput = createComponent(
       GridItem,
-      generatorsList[0]
+      {
+        name: 'generator-angular',
+        version: '1.2.3',
+        icon: 'angular.png'
+      }
     );
   });
 
@@ -58,7 +61,14 @@ describe('Grid Item', () => {
     );
     expect(
       renderOutput.props.children[1].props.style.backgroundImage
-    ).toBeTruthy();
+    ).toBe(
+      'url(angular.png)'
+    );
+    expect(
+      renderOutput.props.children[1].props.style.backgroundSize
+    ).toBe(
+      'cover'
+    );
   });
 
   it('should have a title element', () => {

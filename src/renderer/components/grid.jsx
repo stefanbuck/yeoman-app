@@ -33,6 +33,7 @@ export default React.createClass({
           key={item.name}
           name={item.name}
           version={item.version}
+          icon={item.icon}
           active={item.name === this.props.selectedGenerator.name}
           enabled={!this.props.selectedGenerator.name}
           isCompatible={item.isCompatible}
